@@ -1257,7 +1257,7 @@ RCC_clus = function(conf){
 			output_dir = paste0(output_dir,"_",timeSelected)
 
 			zscore_file_name = paste("2018",runif(1, min = 0, max = 500),"colVar",selected_cluster,".csv",sep="")
-
+			write.csv(rownames(zscore_mat),file = zscore_file_name,row.names = F)
 			selected_cluster_file = paste(output_dir,"/",output_dir,".k=",selected_cluster,".consensusClass.csv",sep="")
 			cluster_file <<- read.csv(selected_cluster_file,header = FALSE)
 			rownames(cluster_file) = cluster_file[,1]
