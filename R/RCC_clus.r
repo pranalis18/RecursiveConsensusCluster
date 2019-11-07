@@ -1256,7 +1256,7 @@ RCC_clus = function(conf){
 		if(selected_cluster > 0){
 			output_dir = paste0(output_dir,"_",timeSelected)
 
-			zscore_file_name = paste("2018",runif(1, min = 0, max = 500),"colVar",selected_cluster,".csv",sep="")
+			zscore_file_name = paste(finalOut,runif(1, min = 0, max = 500),"colVar",selected_cluster,".csv",sep="")
 			write.csv(rownames(zscore_mat),file = zscore_file_name,row.names = F)
 			selected_cluster_file = paste(output_dir,"/",output_dir,".k=",selected_cluster,".consensusClass.csv",sep="")
 			cluster_file <<- read.csv(selected_cluster_file,header = FALSE)
@@ -1328,8 +1328,8 @@ RCC_clus = function(conf){
 	write.csv(sampleInfo,file= paste0(finalOut,"/RCCout.csv"))
 
 	system("rm -rf RCC*")
-	system("cat *Var*csv > genesUsed.csv")
-	file.copy("./genesUsed.csv", finalOut)
-	file.remove("./genesUsed.csv")
-	system("rm -rf lm* *cluster*txt *png *CDF.csv stability* *Var* *mds*")
+	#system("cat *colVar*csv > genesUsed.csv")
+	#file.copy("./genesUsed.csv", finalOut)
+	#file.remove("./genesUsed.csv")
+	system("rm -rf lm* *cluster*txt *png *CDF.csv stability* *mds*")
 }
