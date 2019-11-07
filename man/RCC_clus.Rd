@@ -13,7 +13,7 @@ RCC_clus(x)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+%%     ~~Input configuration file. The input file should be in .txt format with nine fields described in the README file.~~
 }
 }
 \details{
@@ -30,7 +30,7 @@ RCC_clus(x)
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+%%  ~~Pranali S~~
 }
 \note{
 %%  ~~further notes~~
