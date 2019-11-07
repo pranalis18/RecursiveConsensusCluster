@@ -5,7 +5,7 @@
 RCC clustering
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+   This function allows the user to cluster bulk or single-cell transcriptomic data.
 }
 \usage{
 RCC_clus(x)
@@ -13,7 +13,7 @@ RCC_clus(x)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-%%     ~~Input configuration file. The input file should be in .txt format with nine fields described in the README file.~~
+     Input configuration file. The file should be in .txt format and should have nine fields (Descibed in the vignettes)
 }
 }
 \details{
@@ -30,7 +30,7 @@ RCC_clus(x)
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~Pranali S~~
+  Pranali S
 }
 \note{
 %%  ~~further notes~~
