@@ -1133,6 +1133,7 @@ CDF_RCC = function(zscore_mat,output_dir,maxK,times,rIN, selected_mat){
 
 
 RCC_clus = function(conf){
+
 	library(matrixStats)
 	library(pforeach)
 	library(data.table)
@@ -1193,6 +1194,7 @@ RCC_clus = function(conf){
 	zscore_mat = NULL
 	colnames(sampleInfo) = init_cols
 
+	setwd(finalOut)
 	recursive_consensus = function(sample_ids,col_num,threshold,output_dir){
 		system("rm -r RCC*")
 		maxK = min(10,ceiling(nrow(sample_ids)/10))
@@ -1232,8 +1234,10 @@ RCC_clus = function(conf){
 				selected_cluster = 0
 			} else if(is.null(cluster_parallel)){
 				selected_cluster = 0
-			} else if((unique(cluster_parallel) == 0) & (length(cluster_parallel) == 1)){
-				selected_cluster = 0
+			} else if((length(cluster_parallel) == 1)){
+			 if(unique(cluster_parallel) == 0){
+			   selected_cluster = 0
+			 }
 			} else {
 				clusFreq = as.data.frame(table(cluster_parallel))
 				maxFreq = which(clusFreq[,2] == max(clusFreq[,2]))
@@ -1256,7 +1260,7 @@ RCC_clus = function(conf){
 		if(selected_cluster > 0){
 			output_dir = paste0(output_dir,"_",timeSelected)
 
-			zscore_file_name = paste(finalOut,runif(1, min = 0, max = 500),"colVar",selected_cluster,".csv",sep="")
+			zscore_file_name = paste("2018",runif(1, min = 0, max = 500),"colVar",selected_cluster,".csv",sep="")
 			write.csv(rownames(zscore_mat),file = zscore_file_name,row.names = F)
 			selected_cluster_file = paste(output_dir,"/",output_dir,".k=",selected_cluster,".consensusClass.csv",sep="")
 			cluster_file <<- read.csv(selected_cluster_file,header = FALSE)
@@ -1324,12 +1328,11 @@ RCC_clus = function(conf){
 		}
 
 		colnames(sampleInfo)[ncol(sampleInfo)] = "Clusters"
+		sampleInfo <<- sampleInfo
 	}
-	write.csv(sampleInfo,file= paste0(finalOut,"/RCCout.csv"))
+	write.csv(sampleInfo,file= "OutputRCC.csv")
 
 	system("rm -rf RCC*")
-	#system("cat *colVar*csv > genesUsed.csv")
-	#file.copy("./genesUsed.csv", finalOut)
-	#file.remove("./genesUsed.csv")
+	system("cat *Var*csv > genesUsed.csv")
 	system("rm -rf lm* *cluster*txt *png *CDF.csv stability* *mds*")
 }
