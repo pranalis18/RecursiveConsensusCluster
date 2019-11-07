@@ -1334,5 +1334,5 @@ RCC_clus = function(conf){
 
 	system("rm -rf RCC*")
 	system("cat *Var*csv > genesUsed.csv")
-	system("rm -rf lm* *cluster*txt *png *CDF.csv stability* *mds*")
+	system("rm -rf lm* *cluster*txt *png *CDF.csv stability* *var* *mds*")
 }
