@@ -13,7 +13,7 @@ RCC_clus(x)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-     Input configuration file. The file should be in .txt format and should have nine fields (Descibed in the vignettes)
+     Input configuration file. The file should be in .csv format and should have nine fields (Descibed in the vignettes)
 }
 }
 \details{
