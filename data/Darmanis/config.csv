@@ -1,0 +1,9 @@
+Expression Matrix,/media/DSRG4/RCCpaper/darmanis_CPM_IMPUTE/inputPC.csv
+SampleInfo File,/media/DSRG4/RCCpaper/darmanis_CPM_IMPUTE/sampleInfo.csv
+Minimum Slope Threshold,0.175
+Minimum #samples for clustering,20
+Minimum line length,30
+%of genes/features for clustering,1
+%of genes to be differentially expressed,20
+Type of dataset,singleCell
+Output Dir,/home/user/Desktop/try

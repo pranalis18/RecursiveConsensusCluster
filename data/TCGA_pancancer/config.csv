@@ -1,0 +1,9 @@
+Expression Matrix,/media/DSRG4/RCCpaper/panCancerData/log2normalizedCountData.csv
+SampleInfo File,/media/DSRG4/RCCpaper/panCancerData/sampleInfo.csv
+Minimum Slope Threshold,0.175
+Minimum #samples for clustering,100
+Minimum line length,30
+%of genes/features for clustering,5
+%of genes to be differentially expressed,30
+Type of dataset,bulk
+Output Dir,/home/user/Desktop/try

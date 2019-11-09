@@ -1,0 +1,9 @@
+Expression Matrix,/media/DSRG4/RCCpaper/humanData/final_humanData.csv
+SampleInfo File,/media/DSRG4/RCCpaper/humanData/sampleInfo.csv
+Minimum Slope Threshold,0.175
+Minimum #samples for clustering,50
+Minimum line length,30
+%of genes/features for clustering,2
+%of genes to be differentially expressed,20
+Type of dataset,bulk
+Output Dir,/home/user/Desktop/try

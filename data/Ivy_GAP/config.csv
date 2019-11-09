@@ -1,0 +1,9 @@
+Expression Matrix,/home/user/Desktop/MSCTR/RCCpaper/subsetIvyGAP/log2ivyGAP_fpkm.csv
+SampleInfo File,/home/user/Desktop/MSCTR/RCCpaper/subsetIvyGAP/sampleInfo.csv
+Minimum Slope Threshold,0.175
+Minimum #samples for clustering,20
+Minimum line length,30
+%of genes/features for clustering,5
+%of genes to be differentially expressed,10
+Type of dataset,bulk
+Output Dir,/home/user/Desktop/try
