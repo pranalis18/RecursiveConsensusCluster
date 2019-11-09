@@ -1132,7 +1132,7 @@ CDF_RCC = function(zscore_mat,output_dir,maxK,times,rIN, selected_mat){
 ########################################################################################################################################################################################################
 
 
-RCC_clus = function(conf){
+RCC_clus = function(config_file){
 
 	library(matrixStats)
 	library(pforeach)
@@ -1145,54 +1145,52 @@ RCC_clus = function(conf){
 	library(fields)
 	library(gdata)
 
-	config_file = conf
-	config = read.table(config_file,header = FALSE)
-	conf_file = sapply(config,paste0,"")
+  conf_file = read.csv(config_file,header = FALSE)
+  expr_data = as.data.frame(fread(as.character(conf_file[1,2])))
+  rownames(expr_data) = expr_data[,1]
+  expr_data = expr_data[,-1]
+  ssgsea_data = expr_data
+  expr_data = t(expr_data)
+  print("matrix file read")
 
-	expr_data = as.data.frame(fread(conf_file[1]))
-	rownames(expr_data) = expr_data[,1]
-	expr_data = expr_data[,-1]
-	ssgsea_data = expr_data
-	expr_data = t(expr_data)
+  sample_ids = rownames(expr_data)
+  cluster_num = rep(1,nrow(expr_data))
+  sample_ids = cbind(sample_ids,cluster_num)
+  rownames(sample_ids) = sample_ids[,1]
+  sample_ids = as.data.frame(sample_ids)
+  print("SampleInfo file read")
 
-	sample_ids = rownames(expr_data)
-	cluster_num = rep(1,nrow(expr_data))
-	sample_ids = cbind(sample_ids,cluster_num)
-	rownames(sample_ids) = sample_ids[,1]
-	sample_ids = as.data.frame(sample_ids)
+  sampleInfo = NULL
+  m = NULL
 
-	sampleInfo = NULL
-	m = NULL
+  sampleInfo = as.data.frame(fread(as.character(conf_file[2,2])))
+  rownames(sampleInfo) = sampleInfo[,1]
+  sampleInfo = sampleInfo[,-1]
+  init_cols = colnames(sampleInfo)
+  init_colNum = ncol(sampleInfo)
 
-	sampleInfo = as.data.frame(fread(conf_file[2]))
-	rownames(sampleInfo) = sampleInfo[,1]
-	sampleInfo = sampleInfo[,-1]
-	init_cols = colnames(sampleInfo)
-	init_colNum = ncol(sampleInfo)
-
-	common_samples = intersect(rownames(sample_ids),rownames(sampleInfo))
-	sampleInfo = subset(sampleInfo,rownames(sampleInfo) %in% common_samples)
-	sampleInfo_col_num = ncol(sampleInfo)
+  common_samples = intersect(rownames(sample_ids),rownames(sampleInfo))
+  sampleInfo = subset(sampleInfo,rownames(sampleInfo) %in% common_samples)
+  sampleInfo_col_num = ncol(sampleInfo)
 
 
-	tcol_num = ncol(sampleInfo) + 1
+  tcol_num = ncol(sampleInfo) + 1
 
-	alg <<- "km"		#algorithm used for concensus clustering
-	dis <<- "euclidean"		#distance matrix to be used
-	output_dir = "RCCs"
-	repCount <<- 100
-	innerLinkage <<- "ward.D2"
-	corUse <<- "everything"
-	threshold <<- as.numeric(conf_file[3])
-	min_samples = as.numeric(conf_file[4])
-	min_line_len <<- as.numeric(conf_file[5])
-	var_genes_percent = as.numeric(conf_file[6])
-	attribute = as.character(conf_file[8])
-	minGenesP <<- as.numeric(conf_file[7])
-	dataset = as.character(conf_file[9])
-	finalOut = as.character(conf_file[10])
-	zscore_mat = NULL
-	colnames(sampleInfo) = init_cols
+  alg <<- "km"		#algorithm used for concensus clustering
+  dis <<- "euclidean"		#distance matrix to be used
+  output_dir = "RCCs"
+  repCount <<- 100
+  innerLinkage <<- "ward.D2"
+  corUse <<- "everything"
+  threshold <<- as.numeric(as.vector(conf_file[3,2]))
+  min_samples = as.numeric(as.vector(conf_file[4,2]))
+  min_line_len <<- as.numeric(as.vector(conf_file[5,2]))
+  var_genes_percent = as.numeric(as.vector(conf_file[6,2]))
+  minGenesP <<- as.numeric(as.vector(conf_file[7,2]))
+  dataset = as.character(conf_file[8,2])
+  finalOut <<- as.character(conf_file[9,2])
+  zscore_mat = NULL
+  colnames(sampleInfo) = init_cols
 
 	setwd(finalOut)
 	recursive_consensus = function(sample_ids,col_num,threshold,output_dir){
@@ -1304,8 +1302,9 @@ RCC_clus = function(conf){
 
 	number_of_levels = abs(sampleInfo_col_num - ncol(sampleInfo))
 	sampleInfo[,c((ncol(sampleInfo)-number_of_levels):ncol(sampleInfo))][is.na(sampleInfo[,c((ncol(sampleInfo)-number_of_levels):ncol(sampleInfo))])] = 0
-
+	colnames(sampleInfo)[(sampleInfo_col_num + 1): ncol(sampleInfo)] = paste0("Level_",1:number_of_levels)
 	colNum = c(1:number_of_levels)
+	cols = paste("Level_", colNum, sep = "")
 
 	if(length(cols) == 1){
 		Clusters = sampleInfo[,ncol(sampleInfo)]
@@ -1334,5 +1333,5 @@ RCC_clus = function(conf){
 
 	system("rm -rf RCC*")
 	system("cat *Var*csv > genesUsed.csv")
-	system("rm -rf lm* *cluster*txt *png *CDF.csv stability* *var* *mds*")
+	system("rm -rf lm* *cluster*txt *png *CDF.csv stability* *Var* *mds*")
 }
